@@ -36,29 +36,33 @@
 <Modal {open} {toggle} slots={true}>
   <div slot="header">Upload files</div>
   <div slot="body">
-    {#if images?.length > 0}
-      <div class="selected">
-        {images?.length} Images selected
-      </div>
-    {:else}
+    {#if images}
       <div>
-        <label for="posts">
-          <div class="upload">
-            <i class="material-icons">cloud_upload</i>
+        {#if images?.length > 0}
+          <div class="selected">
+            {images?.length} Images selected
           </div>
-        </label>
-        <input
-          type="file"
-          on:change={async (e) => {
-            if (e.currentTarget.files) {
-              // @ts-ignore
+        {:else}
+          <div>
+            <label for="posts">
+              <div class="upload">
+                <i class="material-icons">cloud_upload</i>
+              </div>
+            </label>
+            <input
+              type="file"
+              on:change={async (e) => {
+                if (e.currentTarget.files) {
+                  // @ts-ignore
 
-              images = e.currentTarget.files;
-            }
-          }}
-          id="posts"
-          multiple
-        />
+                  images = e.currentTarget.files;
+                }
+              }}
+              id="posts"
+              multiple
+            />
+          </div>
+        {/if}
       </div>
     {/if}
   </div>
