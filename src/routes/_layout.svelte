@@ -14,7 +14,7 @@
 
   onMount(async () => {
     try {
-      let resp = await axios.get("/api/users", {
+      let resp = await axios.get("https://postl.herokuapp.com/api/users", {
         headers: { authorization: localStorage.__postly },
       });
 

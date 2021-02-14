@@ -25,9 +25,13 @@
 
     try {
       loading = true;
-      let resp = await axios.post("/api/users/register", user, {
-        headers: { "Content-Type": "application/json" },
-      });
+      let resp = await axios.post(
+        "https://postl.herokuapp.com/api/users/register",
+        user,
+        {
+          headers: { "Content-Type": "application/json" },
+        }
+      );
       loading = false;
       if (resp.data.errors) {
         errors = resp.data.errors;

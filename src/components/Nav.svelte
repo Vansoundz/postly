@@ -22,7 +22,7 @@
     //@ts-ignore
     for (let key of body.keys()) console.log(key);
 
-    let res = await axios.post("/api/images", body);
+    let res = await axios.post("https://postl.herokuapp.com/api/images", body);
     console.log(res.data);
 
     loading = true;
