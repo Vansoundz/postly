@@ -1,16 +1,34 @@
 <script lang="ts">
   export let open: boolean;
+  export let slots: boolean = false;
   export let toggle: () => void;
   import { fade, scale } from "svelte/transition";
 </script>
 
 {#if open}
   <main in:fade={{ duration: 200 }} out:scale={{ duration: 500 }}>
-    <div>
-      <div class="header">Header</div>
-      <div class="body">Body</div>
-      <div class="footer" on:click={() => toggle()}>Footer</div>
-    </div>
+    {#if slots}
+      <div class="modal">
+        <div class="header">
+          <slot name="header" />
+        </div>
+        <div class="body">
+          <slot name="body" />
+        </div>
+        <div class="footer">
+          <span>
+            <slot name="footer" />
+          </span>
+          <span>
+            <button on:click={() => toggle()}>Close</button>
+          </span>
+        </div>
+      </div>
+    {:else}
+      <div>
+        <slot />
+      </div>
+    {/if}
   </main>
 {/if}
 
@@ -33,5 +51,39 @@
     height: 500px;
     background: #fff;
     border-radius: 4px;
+  }
+
+  .modal {
+    justify-content: space-between;
+    flex-direction: column;
+    overflow: hidden;
+  }
+
+  .modal,
+  .body,
+  .footer {
+    display: flex;
+  }
+
+  .body {
+    justify-content: center;
+  }
+
+  .footer {
+    justify-content: flex-end;
+    padding: 8px;
+    box-shadow: -1px -1px 8px #ddd;
+  }
+
+  button {
+    padding: 8px 16px;
+    text-transform: uppercase;
+    cursor: pointer;
+    border-radius: 4px;
+  }
+
+  .header {
+    padding: 8px;
+    box-shadow: 0 0 8px #ddd;
   }
 </style>

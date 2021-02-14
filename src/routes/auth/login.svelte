@@ -16,24 +16,29 @@
 
   const submit = async () => {
     errors = [];
+    try {
+      loading = true;
+      let resp = await axios.post("/api/users/login", user, {
+        headers: { "Content-Type": "application/json" },
+      });
+      loading = false;
+      if (resp.data.errors) {
+        errors = resp.data.errors;
+      }
+      if (resp.data.errors) {
+        errors = resp.data.errors;
+      }
 
-    loading = true;
-    let resp = await axios.post("auth/api/login.json", user, {
-      headers: { "Content-Type": "application/json" },
-    });
-    loading = false;
-    if (resp.data.errors) {
-      errors = resp.data.errors;
-    }
-    if (resp.data.errors) {
-      errors = resp.data.errors;
-    }
+      console.log(resp.data);
 
-    console.log(resp.data);
-
-    if (resp.data.user) {
-      auth.login(resp.data.user);
-      goto("dashboard");
+      if (resp.data.user) {
+        localStorage.setItem("__postly", resp.data.token);
+        auth.login(resp.data.user);
+        goto("dashboard");
+      }
+    } catch (error) {
+      console.log(error.response);
+      loading = false;
     }
   };
 </script>

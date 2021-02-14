@@ -11,7 +11,7 @@
   });
 
   let loading = false;
-  let user: { fullName?: string; email?: string; password?: string } = {};
+  let user: { username?: string; email?: string; password?: string } = {};
   let errors = [];
   let password = "";
 
@@ -23,18 +23,24 @@
 
     errors = [];
 
-    loading = true;
-    let resp = await axios.post("auth/api/register.json", user, {
-      headers: { "Content-Type": "application/json" },
-    });
-    loading = false;
-    if (resp.data.errors) {
-      errors = resp.data.errors;
-    }
+    try {
+      loading = true;
+      let resp = await axios.post("/api/users/register", user, {
+        headers: { "Content-Type": "application/json" },
+      });
+      loading = false;
+      if (resp.data.errors) {
+        errors = resp.data.errors;
+      }
 
-    if (resp.data.user) {
-      auth.login(resp.data.user);
-      goto("dashboard");
+      if (resp.data.user) {
+        localStorage.setItem("__postly", resp.data.token);
+        auth.login(resp.data.user);
+        goto("dashboard");
+      }
+    } catch (error) {
+      console.log(error.response);
+      loading = false;
     }
   };
 </script>
@@ -54,19 +60,19 @@
       </div>
       <div>
         <div>
-          <label for="fullName">Full Name:</label>
+          <label for="username">Username:</label>
         </div>
         <div>
           <input
-            bind:value={user.fullName}
+            bind:value={user.username}
             type="text"
-            id="fullName"
+            id="username"
             placeholder="John Doe"
           />
         </div>
-        {#if errors.find((err) => err.param === "fullName")}
-          <div class="error fullName">
-            {errors.find((err) => err.param === "fullName").msg}
+        {#if errors.find((err) => err.param === "username")}
+          <div class="error username">
+            {errors.find((err) => err.param === "username").msg}
           </div>
         {/if}
       </div>

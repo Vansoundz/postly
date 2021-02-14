@@ -28,9 +28,11 @@
             borderColor: "rgb(255, 99, 132)",
             data: [5, 10, 5, 25, 20, 30, 45],
 
-            scales: {
+            scaleOptions: {
               yAxes: [
                 {
+                  id: "first-y-axis",
+                  type: "linear",
                   ticks: {
                     beginAtZero: true,
                   },
@@ -130,7 +132,7 @@
 
   #myChart {
     width: 600px !important;
-    height: 350px !important;
+    height: 310px !important;
     margin: auto;
     display: block;
     margin: 16px auto 64px;

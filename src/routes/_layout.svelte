@@ -14,7 +14,11 @@
 
   onMount(async () => {
     try {
-      let resp = await axios.get("/index.json");
+      let resp = await axios.get("/api/users", {
+        headers: { authorization: localStorage.__postly },
+      });
+
+      console.log(resp.data);
 
       if (resp.data.user) {
         auth.login(resp.data.user);

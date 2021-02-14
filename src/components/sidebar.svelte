@@ -1,6 +1,6 @@
 <script lang="ts">
   export let segment;
-  let links = ["dashboard", "upload", "account", "settings"];
+  let links = ["dashboard", "uploads", "account", "settings"];
 </script>
 
 <main>
@@ -24,6 +24,7 @@
     display: grid;
     grid-template-rows: 2fr 5fr;
     border-right: 1px solid #eee;
+    z-index: 1000;
   }
 
   .logo {
@@ -37,7 +38,7 @@
   }
 
   .active {
-    background: rgb(224, 143, 20);
+    background: #e08f14;
     border-radius: 0 24px 24px 0;
     width: 96%;
   }
@@ -48,5 +49,10 @@
 
   .active > a {
     color: #fff;
+  }
+
+  h4 {
+    color: #e08f14;
+    letter-spacing: 3px;
   }
 </style>
